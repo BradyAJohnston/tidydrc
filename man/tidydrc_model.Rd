@@ -9,28 +9,30 @@ tidydrc_model(data, dose, response, model, ...)
 \arguments{
 \item{data}{dataframe with two or more variables, organized in a tidy way}
 
-\item{dose}{Numeric, the dose variable (could be time, amount of some compound, ...)}
+\item{dose}{Numeric, the dose variable (could be time, amount of some
+compound, ...)}
 
-\item{response}{Numeric, the response variable (for example population size, optical
-density, ...)}
+\item{response}{Numeric, the response variable (for example population size,
+optical density, ...)}
 
 \item{model}{The model function from \code{drc}. Default is \code{LL.4()}}
 
 \item{...}{Variables to group by}
 }
 \value{
-A tibble with list-columns containing the data, the predictions and the coefficients of the model.
+A tibble with list-columns containing the data, the predictions and
+the coefficients of the model.
 }
 \description{
 Tidy modelling of dose-response relationships with the \code{drc} package.
 }
 \details{
-This function is a tidy wrapper for the dose-response modeling functions of the \code{drc} package.
-By default, the four-parameter log-logistic function \code{LL.4()} is used. All other
-functions, implemented in \code{drc}, can be used when provided as the \code{model} parameter
-to this function. The function returns a dataframe with list-columns (the data,
-predictions and coefficients). It is thus easy to implement in tidy
-workflows.
+This function is a tidy wrapper for the dose-response modeling functions of
+the \code{drc} package. By default, the four-parameter log-logistic function
+\code{LL.4()} is used. All other functions, implemented in \code{drc}, can be
+used when provided as the \code{model} parameter to this function. The
+function returns a dataframe with list-columns (the data, predictions and
+coefficients). It is thus easy to implement in tidy workflows.
 }
 \examples{
 ### Logistic regression of bacterial growth data ###
@@ -57,8 +59,6 @@ map(llm$drmod, ED, c(10, 50, 90)) \%>\% map_df(as_tibble, rownames = "level", .i
 mm <- tidydrc_model(Puromycin, conc, rate, model = MM.3(), state)
 names(mm$drmod) <- as.character(mm$state)
 map(mm$drmod, ED, 50) \%>\% map_df(as_tibble, .id = "sample")
-
-
 }
 \seealso{
 \link[tidydrc]{tidydrc_plot}

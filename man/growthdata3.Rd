@@ -23,8 +23,6 @@ to make things realistic.
 }
 \examples{
 data("growthdata3")
-
-
 }
 \author{
 Angel Angelov

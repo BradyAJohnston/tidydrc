@@ -14,6 +14,11 @@ This package leverages the `tidyr::nest()` and `purrr::map()` workflow
 for keeping raw data, fitted models, predictions, and relevant model
 coefficients together in a single data frame.
 
+> This is a fork and refactor of the original
+> [{tidydrc}](https://github.com/angelovangel/tidydrc) that had a
+> stalled development. Credit for original creation goes to Angel
+> Angelov.
+
 ## Installation
 
 <!-- You can install the released version of {tidydrc} from [CRAN](https://CRAN.R-project.org) with: -->
@@ -56,7 +61,7 @@ str(S.alba)
 ```
 
 `S.alba` is data from two Herbicide treatments, and contains Dose info
-as well as the response to the Dose (`DryMatter`),
+as well as the ,response to the Dose (`DryMatter`),
 
 Into the `tidydrc_mode()` function we supply the data frame, dose and
 response columns, the model we wish to fit (defaults to `LL.4()`) and

@@ -2,10 +2,14 @@ Package: tidydrc
 Type: Package
 Title: Tidy modelling of dose-response relationships with the drc package
 Version: 0.1.0.9000
-Author: Angel Angelov
-Maintainer: Angel Angelov <aangeloo@gmail.com>
+Authors@R: c(person("Angel",  "Angelov", email = "aangeloo@gmail.com", role = c("aut", "cre")),
+            person("Brady", "Johnston", email = "brady.johnston@me.com", role = c("aut")))
+Maintainer: Brady Johnston <brady.johnston@me.com>
 Description: Tidy wrapper for the drc package.
-    Includes functions and examples for modelling with the drc package, keeping the models in tidy format.
+    Includes functions and examples for modelling with the drc package, keeping 
+    the models in tidy format.
+URL: https://bradyajohnston.github.io/tidydrc/
+BugReports: https://github.com/bradyajohnston/tidydrc/issues
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true

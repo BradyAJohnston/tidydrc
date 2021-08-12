@@ -75,6 +75,9 @@
 <!-- badges: end -->
 <p>The goal of {tidydrc} is to create a programmatic, ‘tidy’ interface to the {drc} package for fitting various dose-response models to large amounts of experimental data.</p>
 <p>This package leverages the <code><a href="https://tidyr.tidyverse.org/reference/nest.html">tidyr::nest()</a></code> and <code><a href="https://purrr.tidyverse.org/reference/map.html">purrr::map()</a></code> workflow for keeping raw data, fitted models, predictions, and relevant model coefficients together in a single data frame.</p>
+<blockquote>
+<p>This is a fork and refactor of the original <a href="https://github.com/angelovangel/tidydrc">{tidydrc}</a> that had a stalled development. Credit for original creation goes to Angel Angelov.</p>
+</blockquote>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
@@ -89,7 +92,7 @@
 <div id="example" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example" class="anchor"></a>Example</h2>
-<p>With a single function, we fit a <code>LL.4()</code> 4 parameter log-logistic dose-response model do the example data <code>S.alba</code>.</p>
+<p>With a single function, we fit a <code><a href="https://rdrr.io/pkg/drc/man/logistic.html">drc::L.4()</a></code> 4 parameter log-logistic dose-response model do the example data <code>S.alba</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidydrc</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: drc</span>
@@ -109,14 +112,14 @@
 <span class="co">#&gt;  $ Dose     : int  0 0 0 0 0 0 0 0 10 10 ...</span>
 <span class="co">#&gt;  $ Herbicide: Factor w/ 2 levels "Bentazone","Glyphosate": 2 2 2 2 2 2 2 2 2 2 ...</span>
 <span class="co">#&gt;  $ DryMatter: num  4.7 4.6 4.1 4.4 3.2 3 3.8 3.9 3.8 3.8 ...</span></code></pre></div>
-<p><code>S.alba</code> is data from two Herbicide treatments, and contains Dose info as well as the response to the Dose (<code>DryMatter</code>),</p>
+<p><code>S.alba</code> is data from two Herbicide treatments, and contains Dose info as well as the ,response to the Dose (<code>DryMatter</code>),</p>
 <p>Into the <code>tidydrc_mode()</code> function we supply the data frame, dose and response columns, the model we wish to fit (defaults to <code>LL.4()</code>) and and columns we wish to group by – in this case the Herbicide treatment.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fitted</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tidydrc_model.html">tidydrc_model</a></span><span class="op">(</span>
     data <span class="op">=</span> <span class="va">S.alba</span>, 
     dose <span class="op">=</span> <span class="va">Dose</span>, 
     response <span class="op">=</span> <span class="va">DryMatter</span>, 
-    model <span class="op">=</span> <span class="fu">LL.4</span><span class="op">(</span><span class="op">)</span>, 
+    model <span class="op">=</span> <span class="fu">drc</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/drc/man/LL.4.html">LL.4</a></span><span class="op">(</span><span class="op">)</span>, 
     <span class="va">Herbicide</span>
     <span class="op">)</span>
 
@@ -165,8 +168,8 @@
 <div class="developers">
 <h2>Developers</h2>
 <ul class="list-unstyled">
-<li>Angel Angelov <br><small class="roles"> Author, maintainer </small>  </li>
-<li>Brady Johnston <br><small class="roles"> Author </small>  </li>
+<li>Angel Angelov <br><small class="roles"> Author </small>  </li>
+<li>Brady Johnston <br><small class="roles"> Author, maintainer </small>  </li>
 </ul>
 </div>
 

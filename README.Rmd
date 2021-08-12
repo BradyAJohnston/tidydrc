@@ -45,7 +45,10 @@ With a single function, we fit a `LL.4()` 4 parameter log-logistic dose-response
 
 ```{r}
 library(tidydrc)
-gtsummary::tbl_summary(S.alba)
+```
+
+```{r}
+str(S.alba)
 ```
 
 `S.alba` is data from two Herbicide treatments, and contains Dose info as well as the response to the Dose (`DryMatter`),

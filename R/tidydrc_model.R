@@ -2,23 +2,25 @@
 #'
 #' Tidy modelling of dose-response relationships with the \code{drc} package.
 #'
-#' This function is a tidy wrapper for the dose-response modeling functions of the \code{drc} package.
-#' By default, the four-parameter log-logistic function \code{LL.4()} is used. All other
-#' functions, implemented in \code{drc}, can be used when provided as the \code{model} parameter
-#' to this function. The function returns a dataframe with list-columns (the data,
-#' predictions and coefficients). It is thus easy to implement in tidy
-#' workflows.
+#' This function is a tidy wrapper for the dose-response modeling functions of
+#' the \code{drc} package. By default, the four-parameter log-logistic function
+#' \code{LL.4()} is used. All other functions, implemented in \code{drc}, can be
+#' used when provided as the \code{model} parameter to this function. The
+#' function returns a dataframe with list-columns (the data, predictions and
+#' coefficients). It is thus easy to implement in tidy workflows.
 #'
 #' @author Angel Angelov
 #'
 #' @param data dataframe with two or more variables, organized in a tidy way
-#' @param dose Numeric, the dose variable (could be time, amount of some compound, ...)
-#' @param response Numeric, the response variable (for example population size, optical
-#'   density, ...)
+#' @param dose Numeric, the dose variable (could be time, amount of some
+#'   compound, ...)
+#' @param response Numeric, the response variable (for example population size,
+#'   optical density, ...)
 #' @param model The model function from \code{drc}. Default is \code{LL.4()}
 #' @param ... Variables to group by
 #'
-#' @return A tibble with list-columns containing the data, the predictions and the coefficients of the model.
+#' @return A tibble with list-columns containing the data, the predictions and
+#'   the coefficients of the model.
 #'
 #' @usage tidydrc_model(data, dose, response, model, ...)
 #'
@@ -47,42 +49,44 @@
 #' mm <- tidydrc_model(Puromycin, conc, rate, model = MM.3(), state)
 #' names(mm$drmod) <- as.character(mm$state)
 #' map(mm$drmod, ED, 50) %>% map_df(as_tibble, .id = "sample")
-#'
-#'
 #' @seealso \link[tidydrc]{tidydrc_plot}
 #' @export
 
 
- tidydrc_model <- function(data, dose, response, model = LL.4(), ...) {
+tidydrc_model <- function(data, dose, response, model = LL.4(), ...) {
 
- # using eclipsis (...) for group_by(...), so that arbitrary number of grouping variables can be used
- # like this dplyr works in the function, no need for quosure and !!! WHY??
+  # using eclipsis (...) for group_by(...), so that arbitrary number of grouping
+  # variables can be used like this dplyr works in the function, no need for
+  # quosure and !!! WHY??
 
-  # rename columns to dose and response in order for the drm to work (formula interface problems)
-  # my approach (to create new variables before modelling) is much fastet than using classical NSE approach, e.g.
-  # f <- substitute(r ~ d) and later drm(eval(f), ...)
- # would something like eval(substitute(d), df, parent.frame()) work?
- d <- deparse(substitute(dose))
- r <- deparse(substitute(response))
+  # rename columns to dose and response in order for the drm to work (formula
+  # interface problems) my approach (to create new variables before modelling)
+  # is much fastet than using classical NSE approach, e.g. f <- substitute(r ~
+  # d) and later drm(eval(f), ...)
+  # would something like eval(substitute(d), df, parent.frame()) work?
+  d <- deparse(substitute(dose))
+  r <- deparse(substitute(response))
 
- data$d <- data[[d]] # e.g. data[["time"]]
- data$r <- data[[r]]
+  data$d <- data[[d]] # e.g. data[["time"]]
+  data$r <- data[[r]]
 
   drm.func <- function(x) {
-      drc::drm(r ~ d,
+    drc::drm(r ~ d,
       fct = model,
-      data = x)
+      data = x
+    )
   }
 
   # dataframe for predictions
   # add 10% below and above the data to the predictions
   # to generate log scale sequence for preddf:
-  # exp(seq(log(from), log(to), length.out = length.out)) 
+  # exp(seq(log(from), log(to), length.out = length.out))
   from <- ifelse(min(data$d) <= 0,
-                 0.1,
-                 min(data$d, na.rm = TRUE) - (0.1 * min(data$d, na.rm = TRUE)))
+    0.1,
+    min(data$d, na.rm = TRUE) - (0.1 * min(data$d, na.rm = TRUE))
+  )
   to <- max(data$d, na.rm = TRUE) + (0.1 * max(data$d, na.rm = TRUE))
-  
+
   preddf <- data.frame(dose = exp(seq(
     from = log(from),
     to = log(to),
@@ -90,22 +94,31 @@
   )))
 
   predict.fun <- function(x) {
-    cbind(modelr::add_predictions(preddf, x),
-          dplyr::as_tibble(predict(x, newdata = preddf, interval = "confidence"))
-          )
+    cbind(
+      modelr::add_predictions(preddf, x),
+      dplyr::as_tibble(predict(x, newdata = preddf, interval = "confidence"))
+    )
   }
 
- coefs.fun <- function(x) {
-   coef(x) %>% dplyr::tibble(parameter = names(.), value = .) # instead of tidy()
-   }
+  coefs.fun <- function(x) {
+    coef(x) %>% dplyr::tibble(parameter = names(.), value = .) # instead of tidy()
+  }
 
- data %>% dplyr::group_by(...) %>%
-          tidyr::nest() %>%
-          dplyr::mutate(
-            drmod = purrr::map(data, drm.func),
-            pred = purrr::map(drmod, predict.fun),
-            coefs = purrr::map(drmod, coefs.fun)
-            #predint = purrr::map(drmod, function(x) as.tibble(predict(x, newdata = preddf, interval = "confidence")))
+  results <- data %>%
+    dplyr::group_by(...) %>%
+    tidyr::nest() %>%
+    purrr::quietly(dplyr::mutate)(
+      drmod = purrr::map(data, drm.func),
+      resid = purrr::map(drmod, function(x) {
+        r <- residuals(x)
+        data.frame(
+          index = seq_along(r), 
+          resid = r
         )
+      }),
+      pred = purrr::map(drmod, predict.fun),
+      coefs = purrr::map(drmod, coefs.fun)
+    )
 
- }
+  results[[1]]
+}

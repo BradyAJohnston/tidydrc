@@ -22,6 +22,4 @@
 #'
 #' @examples
 #' data("growthdata3")
-#'
-#'
 "growthdata3"

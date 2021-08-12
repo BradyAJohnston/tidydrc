@@ -1,7 +1,7 @@
 Package: tidydrc
 Type: Package
 Title: Tidy modelling of dose-response relationships with the drc package
-Version: 0.1.0
+Version: 0.1.0.9000
 Author: Angel Angelov
 Maintainer: Angel Angelov <aangeloo@gmail.com>
 Description: Tidy wrapper for the drc package.

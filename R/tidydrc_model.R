@@ -111,7 +111,7 @@ tidydrc_model <- function(data, dose, response, model = LL.4(), ...) {
       drmod = purrr::map(data, drm.func),
       resid = purrr::map(drmod, function(x) {
         r <- residuals(x)
-        data.frame(
+        dplyr::tibble(
           index = seq_along(r), 
           resid = r
         )

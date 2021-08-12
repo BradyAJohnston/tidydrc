@@ -89,7 +89,12 @@
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/bradyajohnston/tidydrc/">
+    <span class="fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -104,7 +109,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Tidy wrapper for <code>drc</code></h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/bradyajohnston/tidydrc/blob/master/R/tidydrc_model.R'><code>R/tidydrc_model.R</code></a></small>
     <div class="hidden name"><code>tidydrc_model.Rd</code></div>
     </div>
 
@@ -123,12 +128,13 @@
     </tr>
     <tr>
       <th>dose</th>
-      <td><p>Numeric, the dose variable (could be time, amount of some compound, ...)</p></td>
+      <td><p>Numeric, the dose variable (could be time, amount of some
+compound, ...)</p></td>
     </tr>
     <tr>
       <th>response</th>
-      <td><p>Numeric, the response variable (for example population size, optical
-density, ...)</p></td>
+      <td><p>Numeric, the response variable (for example population size,
+optical density, ...)</p></td>
     </tr>
     <tr>
       <th>model</th>
@@ -142,15 +148,16 @@ density, ...)</p></td>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A tibble with list-columns containing the data, the predictions and the coefficients of the model.</p>
+    <p>A tibble with list-columns containing the data, the predictions and
+the coefficients of the model.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>This function is a tidy wrapper for the dose-response modeling functions of the <code>drc</code> package.
-By default, the four-parameter log-logistic function <code>LL.4()</code> is used. All other
-functions, implemented in <code>drc</code>, can be used when provided as the <code>model</code> parameter
-to this function. The function returns a dataframe with list-columns (the data,
-predictions and coefficients). It is thus easy to implement in tidy
-workflows.</p>
+    <p>This function is a tidy wrapper for the dose-response modeling functions of
+the <code>drc</code> package. By default, the four-parameter log-logistic function
+<code>LL.4()</code> is used. All other functions, implemented in <code>drc</code>, can be
+used when provided as the <code>model</code> parameter to this function. The
+function returns a dataframe with list-columns (the data, predictions and
+coefficients). It is thus easy to implement in tidy workflows.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><a href='tidydrc_plot.html'>tidydrc_plot</a></p></div>
@@ -252,9 +259,7 @@ workflows.</p>
 #&gt;   sample    Estimate `Std. Error`
 #&gt;   <span style='color: #949494; font-style: italic;'>&lt;chr&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>        <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
 #&gt; <span style='color: #BCBCBC;'>1</span> treated      0.105       0.026<span style='text-decoration: underline;'>6</span>
-#&gt; <span style='color: #BCBCBC;'>2</span> untreated    0.109       0.030<span style='text-decoration: underline;'>8</span></div><div class='input'>
-
-</div></pre>
+#&gt; <span style='color: #BCBCBC;'>2</span> untreated    0.109       0.030<span style='text-decoration: underline;'>8</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -266,7 +271,7 @@ workflows.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Angel Angelov.</p>
+  <p>Developed by Angel Angelov, Brady Johnston.</p>
 </div>
 
 <div class="pkgdown">

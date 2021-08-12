@@ -34,7 +34,7 @@ devtools::install_github("bradyajohnston/tidydrc")
 
 ## Example
 
-With a single function, we fit a `LL.4()` 4 parameter log-logistic
+With a single function, we fit a `drc::L.4()` 4 parameter log-logistic
 dose-response model do the example data `S.alba`.
 
 ``` r
@@ -72,7 +72,7 @@ fitted <- tidydrc_model(
     data = S.alba, 
     dose = Dose, 
     response = DryMatter, 
-    model = LL.4(), 
+    model = drc::LL.4(), 
     Herbicide
     )
 

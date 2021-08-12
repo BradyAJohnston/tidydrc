@@ -2,8 +2,8 @@ Package: tidydrc
 Type: Package
 Title: Tidy modelling of dose-response relationships with the drc package
 Version: 0.1.0.9000
-Authors@R: c(person("Angel",  "Angelov", email = "aangeloo@gmail.com", role = c("aut", "cre")),
-            person("Brady", "Johnston", email = "brady.johnston@me.com", role = c("aut")))
+Authors@R: c(person("Angel",  "Angelov", email = "aangeloo@gmail.com", role = c("aut")),
+            person("Brady", "Johnston", email = "brady.johnston@me.com", role = c("aut", "cre")))
 Maintainer: Brady Johnston <brady.johnston@me.com>
 Description: Tidy wrapper for the drc package.
     Includes functions and examples for modelling with the drc package, keeping 
